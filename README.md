@@ -1,3 +1,4 @@
+# HEAD
 # Sawyer Haptic Teleoperation Workspace
 
 Docker environment for Sawyer robot teleoperation using Geomagic Touch haptic device.
@@ -105,3 +106,6 @@ source devel/setup.bash
 - Container runs with `--net=host` for ROS networking
 - X11 forwarding enabled for visualization tools (RViz, etc.)
 - All external dependencies must be installed on host machine
+
+# Sawyer_teleop_with_touchx-3D-system
+>>>>>>> 588955dd7c53f30fa489b5a92f3532907e23a089
