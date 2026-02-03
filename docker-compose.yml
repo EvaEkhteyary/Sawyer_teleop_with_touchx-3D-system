@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  sawyer:
+    image: sawyer_noetic:latest
+    container_name: sawyer_haptic_teleop
+    privileged: true
+    network_mode: host
+    stdin_open: true
+    tty: true
+    environment:
+      - DISPLAY=${DISPLAY}
+      - QT_X11_NO_MITSHM=1
+      - XDG_RUNTIME_DIR=/run/user/${UID:-1000}
+    volumes:
+      # X11 forwarding
+      - /tmp/.X11-unix:/tmp/.X11-unix
+      - /run/user/${UID:-1000}:/run/user/${UID:-1000}
+
+      # ROS workspace packages (read/write)
+      - ./catkin_ws/src/SAWYER:/root/catkin_ws/src/SAWYER
+      - ./catkin_ws/src/Geomagic_Touch_ROS_Drivers:/root/catkin_ws/src/Geomagic_Touch_ROS_Drivers
+      - ./catkin_ws/src/sawyer_touchx_teleop:/root/catkin_ws/src/sawyer_touchx_teleop
+
+      # External dependencies (read-only) - from host machine
+      - ${HOME}/OpenHaptics:/opt/OpenHaptics:ro
+      - ${HOME}/Downloads/TouchDriver_2024_09_19:/root/TouchDriver_2024_09_19:ro
+      - ${HOME}/TouchLibs/libPhantomManagerLite.so:/usr/lib/libPhantomManagerLite.so:ro
+      - ${HOME}/TouchLibs/libPhantomIOLib42.so:/usr/lib/libPhantomIOLib42.so:ro
+      - ${HOME}/TouchLibs/libHL.so.3.4.0:/usr/lib/libHL.so.3.4:ro
+      - ${HOME}/TouchLibs/libHD.so.3.4.0:/usr/lib/libHD.so.3.4:ro
+      - ${HOME}/TouchLibs/libHDU.a:/usr/lib/libHDU.a:ro
